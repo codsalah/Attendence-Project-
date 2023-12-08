@@ -1,5 +1,4 @@
 import tkinter as tk
-from tkinter import font
 from customtkinter import *
 from tkinter import messagebox
 import cv2
@@ -11,7 +10,7 @@ window = tk.Tk()
 window.title("Login Form")
 # window.geometry("800x600")
 w, h = window.winfo_screenwidth(), window.winfo_screenheight()
-window.geometry("%dx%d" % (w, h-20))
+window.geometry("%dx%d" % (w, h))
 window.configure(bg="#F2E9EA")
 frame = tk.Frame(window, bg="#F2E9EA")
 # window.attributes('-fullscreen', True)
@@ -38,23 +37,23 @@ class SelfieApp:
 
         font2 = CTkFont(size=30, weight="bold", slant='italic')
         # Button to capture selfie
-        self.btn_capture = CTkButton(master=window, text="Selfie", text_color="#5B3256", font=font2, bg_color="#8793A1",
+        self.btn_capture = CTkButton(master=window, text="Capture", text_color="#5B3256", font=font2, bg_color="#8793A1",
                                      corner_radius=50, hover_color="#563C5C", fg_color="#F2E9EA",
                                      command=self.capture_selfie)
         self.btn_capture.pack(pady=0)
         self.img = None
 
         # Button to close application
-        self.btn_quit = CTkButton(master=window, text="Submit", text_color="#5B3256", font=font2, corner_radius=50,
-                                  hover_color="#563C5C", fg_color="#F2E9EA", command=self.capture_selfie)
-        self.btn_quit.pack(side="right", padx=40, pady=10)
+        self.btn_try_again = CTkButton(master=window, text="Try Again", text_color="#5B3256", font=font2, corner_radius=50,
+                                  hover_color="#563C5C", fg_color="#F2E9EA", command=self.try_again)
+        self.btn_try_again.pack(side="right", padx=40 , pady=10)
 
         # Start updating the display
         self.update()
 
     def set_background(self, image_path):
         # Load the image
-        bg_image = Image.open("D:/Elon.jpg")  # Replace with your image file path
+        bg_image = Image.open("D:/back.jpg")  # Replace with your image file path
         bg_image = ImageTk.PhotoImage(bg_image)
 
         # to resize the img
@@ -93,7 +92,7 @@ class SelfieApp:
         self.username_entry.image = bg_image
 
     def capture_selfie(self):
-
+        self.captured = True
         ret, frame = self.cap.read()
         # frame = cv2.resize(frame, 100, fx=0.1, fy=0.1)
 
@@ -129,14 +128,10 @@ class SelfieApp:
             self.canvas = os.path.join(path, f"{self.username}.jpg")
             self.img.save(self.canvas)
 
-            # path = 'E:/FaceRecognitionProject/ImageAttendance'
-            #
-            # self.img.save(os.path.join(path, f"{self.username}.jpg"))
-            #############################cv2.imwrite(os.path.join(path,username_label ), frame)
+
             os.startfile(self.canvas)
-        #     tk.messagebox.showinfo("Success", "Selfie submitted successfully!")
-        # else:
-        #     tk.messagebox.showwarning("Warning", "Please capture a selfie first.")
+
+
 
     def update(self):
         ret, frame = self.cap.read()
@@ -160,6 +155,21 @@ class SelfieApp:
         # Repeat the update after 10 milliseconds
         self.window.after(10, self.update)
 
+    def try_again(self):
+        # Get the username entered by the user
+        username = self.username_entry.get()
+
+        # Delete the saved picture by the username
+        path_to_delete = os.path.join('E:/FaceRecognitionProject/ImageAttendance', f"{username}.jpg")
+        if os.path.exists(path_to_delete):
+            os.remove(path_to_delete)
+
+        # Delete the captured selfie
+        self.img = None
+
+        # Update the canvas to open the camera again
+        self.update()
+
 
     def __enter__(self):
         return self
@@ -169,9 +179,8 @@ class SelfieApp:
         if hasattr(self, 'cap') and self.cap.isOpened():
             self.cap.release()
 
-############################################## frame = cv2.resize(frame,100, fx = 0.1, fy = 0.1)
 frame.pack()
 # Create and start the SelfieApp
-with SelfieApp(window, "D:/Elon.jpg") as selfie_app:
+with SelfieApp(window, "D:/back.jpg") as selfie_app:
     window.mainloop()
-    # print(selfie_app.username)
+    print(selfie_app.username)
