@@ -1,15 +1,19 @@
 from tkinter import *
-
+import os
 
 def btn_clicked():
-    print("Button Clicked")
-
+    print("Registring New Student")
+    os.system('E:/ImageProcessing/GUI.py')
 def on_enter(e):
     e.widget['background'] = '#84756B'
 
 def on_leave(e):
     e.widget['background'] = 'SystemButtonFace'
 
+def dispaly_Attendance():
+    print("لسه معملتهاش")
+    # with open('E:/FaceRecognitionProject/attendance.csv') as File:
+    #     Line_reader = csv.reader(File)
 
 window = Tk()
 
@@ -35,7 +39,7 @@ b0 = Button(
     image = img0,
     borderwidth = 0,
     highlightthickness = 0,
-    command = btn_clicked,
+    command = dispaly_Attendance,
     relief = "flat")
 
 b0.place(
