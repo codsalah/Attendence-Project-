@@ -1,4 +1,3 @@
-
 from tkinter import *
 import tkinter as tk
 from tkinter import ttk
@@ -44,14 +43,16 @@ def create_window1():
 def create_window2():
     window2 = tk.Toplevel()
     window2.title("Class Attendance")
-    label = Label(window2, text='Class of Today', justify=tk.LEFT, bg="#F2E9EA", font=28)
+    window2.geometry("842x524")
+    font2 = CTkFont(size=30, weight="bold", slant='italic')
+    label = Label(window2, text='Class of Today', font=font2, justify=tk.LEFT, bg="#F2E9EA")
+
     label.pack(pady=20)
 
     def load_data():
         path = "D:\\download\\projectfinal\\attendance.xlsx"
         workbook = openpyxl.load_workbook(path)
         sheet = workbook.active
-
         list_values = list(sheet.values)
         cols = list_values[0]
         tree = ttk.Treeview(frame, column=cols, show="headings")
@@ -63,23 +64,19 @@ def create_window2():
             tree.insert('', tk.END, values=value_tuple)
 
     frame =Frame(window2)
-    frame.pack(pady=100)
+    frame.pack(pady=30)
     #tree = ttk.Treeview(frame)
     load_data()
-    w, h = window2.winfo_screenwidth(), window2.winfo_screenheight()
-    window2.geometry("%dx%d" % (w, h))
+
     window2.configure(bg="#F2E9EA")
-    #window2.set_background("D:\\download\\projectfinal\\tend.jpg")
-    #background_img = PhotoImage(file=f"D:\\download\\projectfinal\\tend.jpg")
-    #background = canvas.create_image(image=background_img)
+    window2.pack(pady= 100)
+
 
     window2.mainloop()
 
 
-
-
 class SelfieApp:
-    def __init__(self, window , bg_image_path):
+    def __init__(self, window, bg_image_path):
         self.window = window
         self.window.title("Selfie App")
 
@@ -94,21 +91,27 @@ class SelfieApp:
             return
 
         # Create a canvas to display the selfie
-        self.canvas = tk.Canvas(window, width=640, height=480, highlightthickness=0)
-        self.canvas.pack(pady=13)
+        self.canvas = tk.Canvas(window, width=550, height=440, highlightthickness=0)
+        self.canvas.pack(pady=1)
 
         font2 = CTkFont(size=30, weight="bold", slant='italic')
         # Button to capture selfie
-        self.btn_capture = CTkButton(master=window, text="Capture", text_color="#5B3256", font=font2, bg_color="#8793A1",
-                                     corner_radius=50, hover_color="#563C5C", fg_color="#F2E9EA",
+        self.btn_capture = CTkButton(master=window, text="Capture Selfie", text_color="#5B3256", font=font2,
+                                     bg_color="#8793A1", corner_radius=50, hover_color="#563C5C", fg_color="#F2E9EA",
                                      command=self.capture_selfie)
-        self.btn_capture.pack(pady=0)
+        self.btn_capture.pack(pady=0, side="top")
+
         self.img = None
 
         # Button to close application
-        self.btn_try_again = CTkButton(master=window, text="Try Again", text_color="#5B3256", font=font2, corner_radius=50,
-                                  hover_color="#563C5C", fg_color="#F2E9EA", command=self.try_again)
-        self.btn_try_again.pack(side="right", padx=40 , pady=10)
+        self.btn_quit = CTkButton(master=window, text="Submit", text_color="#5B3256", font=font2, corner_radius=50,
+                                  hover_color="#563C5C", fg_color="#F2E9EA", command=self.window.destroy)
+        self.btn_quit.pack(side="right", pady=20, padx=40)
+
+        # button to remove image
+        self.btn_delete = CTkButton(master=window, text="Delete", text_color="#5B3256", font=font2, corner_radius=50,
+                                    hover_color="#563C5C", fg_color="#F2E9EA", command=self.delete_canvas)
+        self.btn_delete.pack(padx=15, side="right")
 
         # Start updating the display
         self.update()
@@ -122,7 +125,6 @@ class SelfieApp:
         # Open the image and resize it
         original_image = Image.open(image_path)
         resized_image = original_image.resize((1500, 750))
-
         # Convert the resized image to a PhotoImage
         bg_image = ImageTk.PhotoImage(resized_image)
 
@@ -134,7 +136,7 @@ class SelfieApp:
         bg_label.image = bg_image
 
         # Create a login label
-        login_label = tk.Label(self.window, text="JOIN CLASS", fg="#5B3256", bg="#F2E9EA", font='times 50 bold italic')
+        login_label = tk.Label(self.window, text="JOIN ClASS", fg="#5B3256", bg="#F2E9EA", font='times 50 bold italic')
         login_label.pack(pady=20)
 
         # create a username label
@@ -142,11 +144,9 @@ class SelfieApp:
                                   font='times 25 bold italic')
         username_label.pack(pady=0)
 
-
-        # create a entry label
+        # craete a entry label
         self.username_entry = tk.Entry(self.window, width=23, font=30, fg="#5B3256")
         self.username_entry.pack(pady=5)
-
 
         # Ensure that the labels persist
         login_label.image = bg_image
@@ -154,10 +154,7 @@ class SelfieApp:
         self.username_entry.image = bg_image
 
     def capture_selfie(self):
-        self.captured = True
         ret, frame = self.cap.read()
-        # frame = cv2.resize(frame, 100, fx=0.1, fy=0.1)
-
 
         # Check if the frame is valid
         if not ret:
@@ -168,70 +165,53 @@ class SelfieApp:
         self.img = Image.fromarray(frame_rgb)
         # Save the captured selfie
         self.photo = ImageTk.PhotoImage(image=self.img)
-
         self.username = self.username_entry.get()
-        # path = 'E:/FaceRecognitionProject/ImageAttendance'
-        # self.img.save(os.path.join(path, f"{self.username}.jpg"))
 
-        # Update the canvas with the captured selfie
-        self.canvas.create_image(0, 0, anchor="nw", image=self.photo)
-
-        self.canvas.image = self.photo
+        # # Update the canvas with the captured selfie
+        # self.canvas.create_image(0, 0, anchor=tk.NW , image=self.photo)
+        # self.canvas.create_image = self.photo
 
         self.submit_selfie()
 
-
     def submit_selfie(self):
         if self.img is not None:
-            # Save the captured selfie to a file
-            # self.username = self.username_entry.get()
-            path = 'E:/FaceRecognitionProject/ImageAttendance'
-            #self.img.save(os.path.join(path, f"{self.username}.jpg"))
-            self.canvas = os.path.join(path, f"{self.username}.jpg")
-            self.img.save(self.canvas)
+            path = 'D:/download/projectfinal'
+            self.photo = os.path.join(path, f"{self.username}.jpg")
+            self.img.save(self.photo)
+            os.startfile(self.photo)
 
+        #     tk.messagebox.showinfo("Success", "Selfie submitted successfully!")
+        # else:
+        #    tk.messagebox.showwarning("Warning", "Please capture a selfie first.")
+        #
 
-            os.startfile(self.canvas)
+    def delete_canvas(self):
+        os.remove(self.photo)
+        self.canvas.delete('all')
+        self.photo = None
+        tk.messagebox.showinfo(message="'Selfie has been deleted successfully!'")
 
-
+        # self.update()
 
     def update(self):
         ret, frame = self.cap.read()
-        # print(frame.shape)
 
         # Check if the frame is valid
         if not ret:
             tk.messagebox.showerror("Error", "Unable to read camera frame.")
             self.window.destroy()
             return
-
+        frame = cv2.resize(frame, (550, 440))
         frame_rgb = cv2.cvtColor(frame, cv2.COLOR_BGR2RGB)
         img = Image.fromarray(frame_rgb)
-        img = ImageTk.PhotoImage(image=img)
+        imgtk = ImageTk.PhotoImage(image=img)
 
         # Update the canvas with the latest frame
+        self.canvas.create_image(0, 0, anchor=tk.NW, image=imgtk)
+        self.canvas.image = imgtk
 
-        self.canvas.create_image(0, 0, anchor="nw", image=img)
-        self.canvas.image = img
-
-        # Repeat the update after 10 milliseconds
-        self.window.after(10, self.update)
-
-    def try_again(self):
-        # Get the username entered by the user
-        username = self.username_entry.get()
-
-        # Delete the saved picture by the username
-        path_to_delete = os.path.join('E:/FaceRecognitionProject/ImageAttendance', f"{username}.jpg")
-        if os.path.exists(path_to_delete):
-            os.remove(path_to_delete)
-
-        # Delete the captured selfie
-        self.img = None
-
-        # Update the canvas to open the camera again
-        self.update()
-
+        # Repeat the update after 1 millisecond
+        self.window.after(1, self.update)
 
     def __enter__(self):
         return self
