@@ -1,11 +1,11 @@
 # Machine learning based Attendance System
 
 ## Team Members
-- @Mahmoud-Elsanour
-- @codsalah
-- @ziad036
-- @maryashraflotfy
-- @ketenjo
+- [@Mahmoud-Elsanour](https://github.com/Mahmoud-Elsanour)
+- [@codsalah](https://github.com/codsalah)
+- [@ziad036](https://github.com/ziad036)
+- [@maryashraflotfy](https://github.com/maryashraflotfy)
+- [@ketenjo](https://github.com/ketenjo)
 
 ## Introduction
 Welcome to our Attendance System project! This system utilizes a Siamese Neural Network to recognize and record the attendance of students. We've implemented a user-friendly GUI using Tkinter for student registration and attendance viewing. The system employs with Haarcascade to locate faces, and Opencv for attendance details, including names and entry times, are stored in Excel sheets, with a new file generated daily based on the date.
