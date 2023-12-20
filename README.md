@@ -1,4 +1,4 @@
-# Attendance System with Siamese Neural Network
+# Machine learning based Attendance System
 
 ## Team Members
 - @Mahmoud-Elsanour
