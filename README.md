@@ -30,7 +30,7 @@ The Tkinter GUI provides an intuitive interface for registering new students and
    - The Siamese Neural Network compares the captured faces with the registered faces to determine the identity.
    - Attendance details, including the student's name and entry time, are recorded in an Excel sheet for the current date.
 
-3. **Excel Sheet Management:**
+3. **Attendance Marking:**
    - A new Excel file is created each day, named based on the date.
    - Attendance details for each day are recorded in the respective Excel file.
 
