@@ -26,7 +26,7 @@ The Tkinter GUI provides an intuitive interface for registering new students and
    - The Siamese Neural Network processes and stores the facial features for future comparison.
 
 2. **Attendance Tracking:**
-   - During attendance tracking, the system captures live faces using OpenCV and Haarcascade.
+   - During attendance tracking, the system Records live video and captures faces using OpenCV.
    - The Siamese Neural Network compares the captured faces with the registered faces to determine the identity.
    - Attendance details, including the student's name and entry time, are recorded in an Excel sheet for the current date.
 
