@@ -19,7 +19,7 @@ We utilized TensorFlow and Keras for the implementation of the Siamese Neural Ne
 ## Tkinter GUI
 The Tkinter GUI provides an intuitive interface for registering new students and viewing daily attendance. The GUI allows users to input student information seamlessly and enhances the overall user experience.
 
-## *Process*
+## Process
 1. **Student Registration:**
    - User inputs student details via the Tkinter GUI.
    - OpenCV with Haarcascade locates and captures the facial features for each student.
